@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">PowerALyric</string>
+    <string name="toggle_service">가사 서비스 시작/정지</string>
+    <string name="start_service">가사 서비스 시작</string>
+    <string name="stop_service">가사 서비스 시작</string>
+    <string name="create_shortcut">바로가기 생성</string>
+    <string name="started_service">가사 서비스를 시작했습니다.</string>
+    <string name="stopped_service">가사 서비스를 정지합니다.</string>
+
+</resources>
