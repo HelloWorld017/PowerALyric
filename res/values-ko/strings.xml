@@ -8,5 +8,10 @@
     <string name="create_shortcut">바로가기 생성</string>
     <string name="started_service">가사 서비스를 시작했습니다.</string>
     <string name="stopped_service">가사 서비스를 정지합니다.</string>
-
+	<string name="lyric_404">가사를 찾을 수 없습니다.</string>
+	<string name="lyric_loading">가사 로딩중&#8230;</string>
+	<string name="debug_mode">디버그 모드 시작/정지</string>
+	<string name="debug_mode_on">디버그 모드를 시작했습니다.</string>
+	<string name="debug_mode_off">디버그 모드를 정지합니다.</string>
+    
 </resources>

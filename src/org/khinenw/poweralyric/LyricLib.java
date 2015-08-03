@@ -24,6 +24,8 @@ import org.w3c.dom.Node;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
+import android.util.Log;
+
 public class LyricLib {
 	
 	public static String getHash(File f) throws IOException, TagException, NoSuchAlgorithmException{
@@ -112,6 +114,9 @@ public class LyricLib {
 			}
 		}
 		
+		if(returnVal.size() > 0){
+			if(MainService.DEBUG_MODE) Log.d("POWERAMPTEST", "FOUND_LYRIC");
+		}
 		return returnVal;
 	}
 }

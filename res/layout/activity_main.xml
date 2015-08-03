@@ -10,4 +10,11 @@
         android:layout_height="wrap_content"
         android:text="@string/toggle_service" />
 
+    <Button
+        android:id="@+id/toggle_debug"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/debug_mode"
+        android:layout_below="@+id/toggle_service" />
+
 </RelativeLayout>

@@ -20,13 +20,13 @@ import android.util.Log;
 
 public class MainService extends Service{
 
-	private RemoteTrackTime mRemoteTrackTime;
+	private RemoteTrackTime mRemoteTrackTime = null;
 	private Intent mTrackIntent;
 	private Intent mStatusIntent;
 	private Map<Integer, String> currentLyric = new TreeMap<Integer, String>();
 	private PopupViewer lyricViewer;
 	
-	public final boolean DEBUG_MODE = false;
+	public static boolean DEBUG_MODE = true;
 	
 	@Override
 	public IBinder onBind(Intent intent) {
@@ -65,15 +65,14 @@ public class MainService extends Service{
 		@Override
 		public void onReceive(Context context, Intent intent){
 			mTrackIntent = intent;
-			lyricViewer.setText(" ");
+			currentLyric.clear();
+			lyricViewer.setText(MainService.this.getString(R.string.lyric_loading));
 			if(DEBUG_MODE) Log.d("POWERAMPTEST", "TRACK_MOVED");
 			startService(PowerampAPI.newAPIIntent().putExtra(PowerampAPI.COMMAND, PowerampAPI.Commands.POS_SYNC));	
 			try{
 				Bundle trackData = intent.getBundleExtra(PowerampAPI.TRACK);
-				String hash = LyricLib.getHash(new File(trackData.getString(PowerampAPI.Track.PATH)));
-				if(DEBUG_MODE) Log.d("POWERAMPTEST", "LYRIC_HASH : " + hash);
 				LyricTask task = new LyricTask();
-				task.execute(hash);
+				task.execute(trackData.getString(PowerampAPI.Track.PATH));
 			}catch(Exception e) {
 				if(DEBUG_MODE) Log.e("POWERAMPTEST", Log.getStackTraceString(e));
 			}
@@ -104,7 +103,10 @@ public class MainService extends Service{
 			lyricViewer.dismiss();
 		}
 		
-		mRemoteTrackTime.unregister();
+		if(mRemoteTrackTime != null){
+			mRemoteTrackTime.unregister();
+		}
+		
 		try{
 			if(mTrackIntent != null) {
 				unregisterReceiver(mTrackReceiver);
@@ -120,12 +122,25 @@ public class MainService extends Service{
 		@Override
 		protected Void doInBackground(String... params) {
 			try{
-				currentLyric = LyricLib.parseLyric(LyricLib.getLyric(params[0]));
-			}catch (Exception e){
+				currentLyric = LyricLib.parseLyric(LyricLib.getLyric(LyricLib.getHash(new File(params[0]))));
+				
 				if(DEBUG_MODE) Log.d("POWERAMPTEST", "LYRIC_LOADED : " + currentLyric.size());
+			}catch (Exception e){
+				if(DEBUG_MODE) Log.e("POWERAMPTEST", "ERROR : " + Log.getStackTraceString(e));
 			}
 			
 			return null;
+		}
+		
+		@Override
+		protected void onPostExecute(Void result){
+			super.onPostExecute(result);
+			if(currentLyric.size() <= 0){
+				lyricViewer.setText(MainService.this.getString(R.string.lyric_404));
+			}else{
+				lyricViewer.setText(" ");
+			}
+				
 		}
 	}
 

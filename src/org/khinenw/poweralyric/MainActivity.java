@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends Activity {
 
@@ -30,6 +31,21 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				toggleService();
+			}
+			
+		});
+		
+		((Button) findViewById(R.id.toggle_debug)).setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View v) {
+				if(MainService.DEBUG_MODE){
+					MainService.DEBUG_MODE = false;
+					Toast.makeText(MainActivity.this, MainActivity.this.getString(R.string.debug_mode_off), Toast.LENGTH_SHORT).show();
+				}else{
+					MainService.DEBUG_MODE = true;
+					Toast.makeText(MainActivity.this, MainActivity.this.getString(R.string.debug_mode_on), Toast.LENGTH_SHORT).show();
+				}
 			}
 			
 		});
