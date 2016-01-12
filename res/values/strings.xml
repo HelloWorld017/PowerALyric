@@ -8,7 +8,7 @@
     <string name="started_service">Started Lyric Service</string>
     <string name="stopped_service">Stopped Lyric Service</string>
     <string name="create_shortcut">Create Shortcut</string>
-    <string name="lyric_404">Could not found lyrics.</string>
+    <string name="lyric_404">Could not find lyrics.</string>
     <string name="lyric_loading">Loading lyrics&#8230;</string>
     <string name="debug_mode">Toggle debug mode</string>
     <string name="debug_mode_on">Turned on debug mode</string>
